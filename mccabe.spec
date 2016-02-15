@@ -4,7 +4,7 @@
 #
 Name     : mccabe
 Version  : 0.2.1
-Release  : 12
+Release  : 13
 URL      : https://pypi.python.org/packages/source/m/mccabe/mccabe-0.2.1.tar.gz
 Source0  : https://pypi.python.org/packages/source/m/mccabe/mccabe-0.2.1.tar.gz
 Summary  : McCabe checker, plugin for flake8
