@@ -1,5 +1,5 @@
 PKG_NAME := mccabe
-URL := https://pypi.python.org/packages/source/m/mccabe/mccabe-0.2.1.tar.gz
+URL := http://pypi.debian.net/mccabe/mccabe-0.5.0.tar.gz
 ARCHIVES :=
 
 include ../common/Makefile.common
