@@ -4,7 +4,7 @@
 #
 Name     : mccabe
 Version  : 0.5.2
-Release  : 18
+Release  : 19
 URL      : http://pypi.debian.net/mccabe/mccabe-0.5.2.tar.gz
 Source0  : http://pypi.debian.net/mccabe/mccabe-0.5.2.tar.gz
 Summary  : McCabe checker, plugin for flake8
