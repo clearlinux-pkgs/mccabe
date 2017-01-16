@@ -4,7 +4,7 @@
 #
 Name     : mccabe
 Version  : 0.5.2
-Release  : 21
+Release  : 22
 URL      : http://pypi.debian.net/mccabe/mccabe-0.5.2.tar.gz
 Source0  : http://pypi.debian.net/mccabe/mccabe-0.5.2.tar.gz
 Summary  : McCabe checker, plugin for flake8
@@ -13,7 +13,7 @@ License  : MIT
 Requires: mccabe-python
 BuildRequires : pbr
 BuildRequires : pip
-BuildRequires : pytest-runner-python
+BuildRequires : pytest-runner
 BuildRequires : python-dev
 BuildRequires : python3-dev
 BuildRequires : setuptools
@@ -36,13 +36,15 @@ python components for the mccabe package.
 
 %build
 export LANG=C
+export SOURCE_DATE_EPOCH=1484553542
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %install
+export SOURCE_DATE_EPOCH=1484553542
 rm -rf %{buildroot}
-python2 -tt setup.py build -b py2 install --root=%{buildroot}
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
+python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
 
 %files
 %defattr(-,root,root,-)
