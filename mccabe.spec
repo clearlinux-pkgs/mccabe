@@ -4,7 +4,7 @@
 #
 Name     : mccabe
 Version  : 0.6.1
-Release  : 23
+Release  : 24
 URL      : http://pypi.debian.net/mccabe/mccabe-0.6.1.tar.gz
 Source0  : http://pypi.debian.net/mccabe/mccabe-0.6.1.tar.gz
 Summary  : McCabe checker, plugin for flake8
@@ -36,12 +36,12 @@ python components for the mccabe package.
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1487866809
+export SOURCE_DATE_EPOCH=1489280153
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1487866809
+export SOURCE_DATE_EPOCH=1489280153
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
