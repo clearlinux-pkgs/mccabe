@@ -1,3 +1,0 @@
-# openstack Liberty needs version == 0.2.1 
-# for more information check https://github.com/openstack/requirements/blob/master/global-requirements.txt
-watchurl=https://pypi.python.org/packages/source/m/mccabe/mccabe-0.2.1.tar.gz*
