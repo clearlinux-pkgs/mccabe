@@ -4,36 +4,182 @@
 #
 Name     : mccabe
 Version  : 0.6.1
-Release  : 51
+Release  : 52
 URL      : http://pypi.debian.net/mccabe/mccabe-0.6.1.tar.gz
 Source0  : http://pypi.debian.net/mccabe/mccabe-0.6.1.tar.gz
 Summary  : McCabe checker, plugin for flake8
 Group    : Development/Tools
 License  : MIT
-Requires: mccabe-python3
-Requires: mccabe-python
-BuildRequires : pbr
-BuildRequires : pip
+Requires: mccabe-license = %{version}-%{release}
+Requires: mccabe-python = %{version}-%{release}
+Requires: mccabe-python3 = %{version}-%{release}
+BuildRequires : buildreq-distutils3
 BuildRequires : pytest-runner
 
-BuildRequires : python3-dev
-BuildRequires : setuptools
-
 %description
+McCabe complexity checker
 =========================
-        
-        Ned's script to check McCabe complexity.
-        
-        This module provides a plugin for ``flake8``, the Python code checker.
-        
-        
-        Installation
-        ------------
+
+Ned's script to check McCabe complexity.
+
+This module provides a plugin for ``flake8``, the Python code checker.
+
+
+Installation
+------------
+
+You can install, upgrade, uninstall ``mccabe`` with these commands::
+
+  $ pip install mccabe
+  $ pip install --upgrade mccabe
+  $ pip uninstall mccabe
+
+
+Standalone script
+-----------------
+
+The complexity checker can be used directly::
+
+  $ python -m mccabe --min 5 mccabe.py
+  ("185:1: 'PathGraphingAstVisitor.visitIf'", 5)
+  ("71:1: 'PathGraph.to_dot'", 5)
+  ("245:1: 'McCabeChecker.run'", 5)
+  ("283:1: 'main'", 7)
+  ("203:1: 'PathGraphingAstVisitor.visitTryExcept'", 5)
+  ("257:1: 'get_code_complexity'", 5)
+
+
+Plugin for Flake8
+-----------------
+
+When both ``flake8 2.0`` and ``mccabe`` are installed, the plugin is
+available in ``flake8``::
+
+  $ flake8 --version
+  2.0 (pep8: 1.4.2, pyflakes: 0.6.1, mccabe: 0.2)
+
+By default the plugin is disabled.  Use the ``--max-complexity`` switch to
+enable it.  It will emit a warning if the McCabe complexity of a function is
+higher that the value::
+
+    $ flake8 --max-complexity 10 coolproject
+    ...
+    coolproject/mod.py:1204:1: C901 'CoolFactory.prepare' is too complex (14)
+
+This feature is quite useful to detect over-complex code.  According to McCabe,
+anything that goes beyond 10 is too complex.
+
+
+Links
+-----
+
+* Feedback and ideas: http://mail.python.org/mailman/listinfo/code-quality
+
+* Cyclomatic complexity: http://en.wikipedia.org/wiki/Cyclomatic_complexity.
+
+* Ned Batchelder's script:
+  http://nedbatchelder.com/blog/200803/python_code_complexity_microtool.html
+
+
+Changes
+-------
+
+0.6.1 - 2017-01-26
+``````````````````
+
+* Fix signature for ``PathGraphingAstVisitor.default`` to match the signature
+  for ``ASTVisitor``
+
+0.6.0 - 2017-01-23
+``````````````````
+
+* Add support for Python 3.6
+
+* Fix handling for missing statement types
+
+0.5.3 - 2016-12-14
+``````````````````
+
+* Report actual column number of violation instead of the start of the line
+
+0.5.2 - 2016-07-31
+``````````````````
+
+* When opening files ourselves, make sure we always name the file variable
+
+0.5.1 - 2016-07-28
+``````````````````
+
+* Set default maximum complexity to -1 on the class itself
+
+0.5.0 - 2016-05-30
+``````````````````
+
+* PyCon 2016 PDX release
+
+* Add support for Flake8 3.0
+
+0.4.0 - 2016-01-27
+``````````````````
+
+* Stop testing on Python 3.2
+
+* Add support for async/await keywords on Python 3.5 from PEP 0492
+
+0.3.1 - 2015-06-14
+``````````````````
+
+* Include ``test_mccabe.py`` in releases.
+
+* Always coerce the ``max_complexity`` value from Flake8's entry-point to an
+  integer.
+
+0.3 - 2014-12-17
+````````````````
+
+* Computation was wrong: the mccabe complexity starts at 1, not 2.
+
+* The ``max-complexity`` value is now inclusive.  E.g.: if the
+  value is 10 and the reported complexity is 10, then it passes.
+
+* Add tests.
+
+
+0.2.1 - 2013-04-03
+``````````````````
+
+* Do not require ``setuptools`` in setup.py.  It works around an issue
+  with ``pip`` and Python 3.
+
+
+0.2 - 2013-02-22
+````````````````
+
+* Rename project to ``mccabe``.
+
+* Provide ``flake8.extension`` setuptools entry point.
+
+* Read ``max-complexity`` from the configuration file.
+
+* Rename argument ``min_complexity`` to ``threshold``.
+
+
+0.1 - 2013-02-11
+````````````````
+* First release
+
+%package license
+Summary: license components for the mccabe package.
+Group: Default
+
+%description license
+license components for the mccabe package.
+
 
 %package python
 Summary: python components for the mccabe package.
 Group: Default
-Requires: mccabe-python3
+Requires: mccabe-python3 = %{version}-%{release}
 
 %description python
 python components for the mccabe package.
@@ -43,6 +189,7 @@ python components for the mccabe package.
 Summary: python3 components for the mccabe package.
 Group: Default
 Requires: python3-core
+Provides: pypi(mccabe)
 
 %description python3
 python3 components for the mccabe package.
@@ -50,24 +197,39 @@ python3 components for the mccabe package.
 
 %prep
 %setup -q -n mccabe-0.6.1
+cd %{_builddir}/mccabe-0.6.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1519051604
-python3 setup.py build -b py3
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1583173200
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
+export MAKEFLAGS=%{?_smp_mflags}
+python3 setup.py build
 
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/mccabe
+cp %{_builddir}/mccabe-0.6.1/LICENSE %{buildroot}/usr/share/package-licenses/mccabe/9bf33315fe3a3b3f00928e6e98d067c4f762ee13
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/mccabe/9bf33315fe3a3b3f00928e6e98d067c4f762ee13
 
 %files python
 %defattr(-,root,root,-)

@@ -1,1 +1,7 @@
 # This file contains recursive sources that require this package
+amazon-efs-utils
+ceph
+flake8
+flake8-builtins
+pylama
+pylint
