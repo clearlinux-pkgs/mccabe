@@ -1,8 +1,1 @@
 # This file contains recursive sources that require this package
-amazon-efs-utils
-ansible
-flake8
-lutris
-pylint
-python-language-server
-python-lsp-server

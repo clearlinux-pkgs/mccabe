@@ -4,7 +4,7 @@
 #
 Name     : mccabe
 Version  : 0.6.1
-Release  : 68
+Release  : 69
 URL      : http://pypi.debian.net/mccabe/mccabe-0.6.1.tar.gz
 Source0  : http://pypi.debian.net/mccabe/mccabe-0.6.1.tar.gz
 Summary  : McCabe checker, plugin for flake8
@@ -14,7 +14,7 @@ Requires: mccabe-license = %{version}-%{release}
 Requires: mccabe-python = %{version}-%{release}
 Requires: mccabe-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
-BuildRequires : pytest-runner
+BuildRequires : pypi(pytest_runner)
 
 %description
 =========================
@@ -63,7 +63,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1635752716
+export SOURCE_DATE_EPOCH=1642466478
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
